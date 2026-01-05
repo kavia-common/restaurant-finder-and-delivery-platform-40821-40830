@@ -1,0 +1,4 @@
+{
+    "command": "PORT=<port> HOST=<host> BROWSER=none npm start",
+    "working_directory": "/home/kavia/workspace/code-generation/restaurant-finder-and-delivery-platform-40821-40830/frontend_react_app"
+}
