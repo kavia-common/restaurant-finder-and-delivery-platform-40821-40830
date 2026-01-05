@@ -1,0 +1,7 @@
+This file indicates the full app structure should exist under:
+- src/pages
+- src/components
+- src/state
+- src/services
+- src/theme
+If these folders are missing, prior file writes did not apply and should be re-issued.
