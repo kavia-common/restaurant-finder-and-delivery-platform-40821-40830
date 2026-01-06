@@ -1,3 +1,10 @@
+/**
+ * Mock images
+ * - Keep existing (unsplash.com) placeholder imagery for all cuisines by default.
+ * - For Italian, Chinese, and Indian restaurants only, use stable stock placeholders via
+ *   https://unsplash.it/seed/<seed>/<w>/<h> so list cards and details hero remain consistent.
+ */
+
 const placeholderImages = [
   "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=60",
   "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=60",
@@ -7,6 +14,21 @@ const placeholderImages = [
 
 function pickImage(seed) {
   return placeholderImages[seed % placeholderImages.length];
+}
+
+function makeSeed(id, name) {
+  // Stable, URL-safe seed based on restaurant id + name (no randomness).
+  return encodeURIComponent(`${id}-${name}`.toLowerCase().replace(/\s+/g, "-"));
+}
+
+function seededStockImage({ id, name, width, height }) {
+  const seed = makeSeed(id, name);
+  return `https://unsplash.it/seed/${seed}/${width}/${height}`;
+}
+
+function hasAnyCuisine(cuisines, targets) {
+  const set = new Set(cuisines || []);
+  return targets.some((t) => set.has(t));
 }
 
 export const restaurants = [
@@ -29,7 +51,8 @@ export const restaurants = [
     price: "$$",
     deliveryTimeMins: 40,
     deliveryFee: 1.49,
-    imageUrl: pickImage(2),
+    imageUrl: seededStockImage({ id: "r-102", name: "Amber Spice Kitchen", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-102", name: "Amber Spice Kitchen", width: 1200, height: 600 }),
     distanceKm: 3.8
   },
   {
@@ -51,7 +74,8 @@ export const restaurants = [
     price: "$$",
     deliveryTimeMins: 35,
     deliveryFee: 2.49,
-    imageUrl: pickImage(0),
+    imageUrl: seededStockImage({ id: "r-104", name: "City Brick Pizza", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-104", name: "City Brick Pizza", width: 1200, height: 600 }),
     distanceKm: 4.2
   },
 
@@ -67,7 +91,8 @@ export const restaurants = [
     price: "$$",
     deliveryTimeMins: 32,
     deliveryFee: 2.29,
-    imageUrl: pickImage(1),
+    imageUrl: seededStockImage({ id: "r-105", name: "Trattoria Sol Mare", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-105", name: "Trattoria Sol Mare", width: 1200, height: 600 }),
     distanceKm: 2.9
   },
   {
@@ -78,7 +103,8 @@ export const restaurants = [
     price: "$$",
     deliveryTimeMins: 28,
     deliveryFee: 1.99,
-    imageUrl: pickImage(2),
+    imageUrl: seededStockImage({ id: "r-106", name: "Pasta & Basil House", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-106", name: "Pasta & Basil House", width: 1200, height: 600 }),
     distanceKm: 1.8
   },
 
@@ -91,7 +117,8 @@ export const restaurants = [
     price: "$$",
     deliveryTimeMins: 30,
     deliveryFee: 2.49,
-    imageUrl: pickImage(3),
+    imageUrl: seededStockImage({ id: "r-107", name: "Red Lantern Wok", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-107", name: "Red Lantern Wok", width: 1200, height: 600 }),
     distanceKm: 3.2
   },
   {
@@ -102,7 +129,8 @@ export const restaurants = [
     price: "$",
     deliveryTimeMins: 24,
     deliveryFee: 1.29,
-    imageUrl: pickImage(0),
+    imageUrl: seededStockImage({ id: "r-108", name: "Golden Panda Express Kitchen", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-108", name: "Golden Panda Express Kitchen", width: 1200, height: 600 }),
     distanceKm: 2.0
   },
 
@@ -115,7 +143,8 @@ export const restaurants = [
     price: "$$",
     deliveryTimeMins: 38,
     deliveryFee: 2.19,
-    imageUrl: pickImage(1),
+    imageUrl: seededStockImage({ id: "r-109", name: "Tandoor & Curry Co.", width: 640, height: 420 }),
+    heroImageUrl: seededStockImage({ id: "r-109", name: "Tandoor & Curry Co.", width: 1200, height: 600 }),
     distanceKm: 4.0
   }
 ];

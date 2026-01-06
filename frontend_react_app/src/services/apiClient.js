@@ -56,5 +56,7 @@ export async function fetchRestaurantDetails(restaurantId) {
   const menu = getMenuForRestaurant(restaurantId);
   if (!restaurant) return null;
 
-  return { ...restaurant, menu };
+  // Prefer a dedicated hero image for details view when present; otherwise keep imageUrl.
+  const imageUrl = restaurant.heroImageUrl || restaurant.imageUrl;
+  return { ...restaurant, imageUrl, menu };
 }
